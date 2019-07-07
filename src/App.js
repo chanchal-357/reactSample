@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
-import ThemeChanger from './component/ThemeChanger';
+import Register from './component/Register';
 
 function App() {
   return (
     <div className="App">
-      <ThemeChanger />
+      <Register />
     </div>
   );
 }
