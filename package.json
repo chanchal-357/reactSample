@@ -1,0 +1,47 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "admin-lte": "2.3.11",
+    "axios": "^0.16.2",
+    "bootstrap": "3.3.7",
+    "create-react-class": "^15.6.3",
+    "i18n-iso-countries": "^4.1.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-alert": "2.3.0",
+    "react-bootstrap": "^0.31.2",
+    "react-bootstrap-date-picker": "github:pushtell/react-bootstrap-date-picker#f622dc8872dd180324ba5d3c295d009848f5814b",
+    "react-confirm-bootstrap": "^3.1.4",
+    "react-dom": "^16.8.6",
+    "react-modal": "^2.2.2",
+    "react-router": "^4.1.2",
+    "react-router-dom": "^4.1.2",
+    "react-scripts": "3.0.1",
+    "react-select": "2.1.2",
+    "reactstrap": "^8.0.0",
+    "redux": "^3.7.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
