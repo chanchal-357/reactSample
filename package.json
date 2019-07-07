@@ -12,7 +12,7 @@
     "react": "^16.8.6",
     "react-alert": "2.3.0",
     "react-bootstrap": "^0.31.2",
-    "react-bootstrap-date-picker": "github:pushtell/react-bootstrap-date-picker#f622dc8872dd180324ba5d3c295d009848f5814b",
+    "react-bootstrap-date-picker": "^5.1.0",
     "react-confirm-bootstrap": "^3.1.4",
     "react-dom": "^16.8.6",
     "react-modal": "^2.2.2",
