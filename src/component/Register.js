@@ -12,14 +12,15 @@ var DatePicker = require("react-bootstrap-date-picker");
 var countries = require("i18n-iso-countries");
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
-class ThemeChanger extends React.Component {
+class Register extends React.Component {
 
     state = {
         email: null,
-        gender: null,
-        dateOfBirth: null,
-        country: null,
-        reason: null
+        gender: "M",
+        dateOfBirth: new Date("1988-08-12").toISOString().split('.')[0] + "Z",
+        country: "IN",
+        reason: null,
+        accountValidity: new Date("2019-12-25").toISOString().split('.')[0] + "Z"
     }
 
     dateChangeHandler = (value, formattedValue) => {
@@ -29,9 +30,9 @@ class ThemeChanger extends React.Component {
         console.log(JSON.stringify({ ...this.state }));
     }
 
-    handleChange = (selectedOption, meta) => {
+    handleSelectChange = (selectedOption, meta) => {
         const { name } = meta;
-        this.setState({ [name]: selectedOption.value });
+        this.setState({ [name]: selectedOption.value});
         console.log(JSON.stringify({ ...this.state }));
     };
 
@@ -185,17 +186,28 @@ class ThemeChanger extends React.Component {
                                             <DatePicker name="dateOfBirth"
                                                 id="dateOfBirth"
                                                 value={this.state.dateOfBirth}
-                                                onChange={this.dateChangeHandler} />
+                                                onChange={this.dateChangeHandler}
+                                                dateFormat="DD/MM/YYYY" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="country">Account Valid Till:</label>
+                                            <DatePicker
+                                                name="accountValidity"
+                                                id="accountValidity"
+                                                value={this.state.accountValidity}
+                                                onChange={this.dateChangeHandler}
+                                                dateFormat="DD/MM/YYYY"
+                                            />
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="gender">Gender:</label>
                                             <Select
                                                 options={genderOptions}
-                                                // onChange={(event, meta) => this.handleChange(event, meta)}
+                                                value={genderOptions.filter(option => option.value === this.state.gender)}
                                                 onChange={
                                                     (event, meta) => {
                                                         meta.name = "gender";
-                                                        this.handleChange(event, meta);
+                                                        this.handleSelectChange(event, meta);
                                                     }}
                                                 name="gender"
                                                 id="gender"
@@ -206,15 +218,17 @@ class ThemeChanger extends React.Component {
                                             <label htmlFor="country">Country:</label>
                                             <Select
                                                 options={countryOptions}
+                                                value={countryOptions.filter(option => option.value === this.state.country)}
                                                 onChange={(event, meta) => {
                                                     meta.name = "country";
-                                                    this.handleChange(event, meta);
+                                                    this.handleSelectChange(event, meta);
                                                 }}
                                                 name="country"
                                                 id="country"
                                                 isSearchable={true}
                                             />
                                         </div>
+
                                         <div className="checkbox">
                                             <label><input type="checkbox" /> Remember me</label>
                                         </div>
@@ -234,4 +248,4 @@ class ThemeChanger extends React.Component {
         );
     }
 }
-export default ThemeChanger;
+export default Register;
