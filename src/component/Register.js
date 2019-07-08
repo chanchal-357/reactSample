@@ -183,62 +183,72 @@ class Register extends React.Component {
                                 </div>
                                 <div className="box-body">
                                     <form action="#">
-                                        <div className="form-group">
-                                            <label htmlFor="email">Email address:</label>
-                                            <input type="email" className="form-control" name="email" id="email" onChange={this.inputChangedHandler} />
+                                        <div className="form-group row">
+                                            <label htmlFor="email" className="col-sm-4 col-form-label">Email address:</label>
+                                            <div className="col-sm-8">
+                                                <input type="email" className="form-control" name="email" id="email" onChange={this.inputChangedHandler} />
+                                            </div>
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="dob">Date of Birth:</label>
-                                            <DatePicker name="dateOfBirth"
-                                                id="dateOfBirth"
-                                                value={this.state.dateOfBirth}
-                                                // onChange={this.dateChangeHandler}
-                                                onChange={this.handleDateChangeJq.bind(this, 'dateOfBirth')}
-                                                dateFormat="DD/MM/YYYY" />
+                                        <div className="form-group row">
+                                            <label htmlFor="dob" className="col-sm-4 col-form-label">Date of Birth:</label>
+                                            <div className="col-sm-8">
+                                                <DatePicker name="dateOfBirth"
+                                                    id="dateOfBirth"
+                                                    value={this.state.dateOfBirth}
+                                                    // onChange={this.dateChangeHandler}
+                                                    onChange={this.handleDateChangeJq.bind(this, 'dateOfBirth')}
+                                                    dateFormat="DD/MM/YYYY" />
+                                            </div>
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="country">Account Valid Till:</label>
-                                            <DatePicker
-                                                name="accountValidity"
-                                                id="accountValidity"
-                                                value={this.state.accountValidity}
-                                                // onChange={this.dateChangeHandler}
-                                                onChange={this.handleDateChangeJq.bind(this, 'accountValidity')}
-                                                dateFormat="DD/MM/YYYY"
-                                            />
+                                        <div className="form-group row">
+                                            <label htmlFor="country" className="col-sm-4 col-form-label">Account Valid Till:</label>
+                                            <div className="col-sm-8">
+                                                <DatePicker
+                                                    name="accountValidity"
+                                                    id="accountValidity"
+                                                    value={this.state.accountValidity}
+                                                    // onChange={this.dateChangeHandler}
+                                                    onChange={this.handleDateChangeJq.bind(this, 'accountValidity')}
+                                                    dateFormat="DD/MM/YYYY"
+                                                />
+                                            </div>
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="gender">Gender:</label>
-                                            <Select
-                                                options={genderOptions}
-                                                value={genderOptions.filter(option => option.value === this.state.gender)}
-                                                onChange={
-                                                    (event, meta) => {
-                                                        meta.name = "gender";
+                                        <div className="form-group row">
+                                            <label htmlFor="gender" className="col-sm-4 col-form-label">Gender:</label>
+                                            <div className="col-sm-8">
+                                                <Select
+                                                    options={genderOptions}
+                                                    value={genderOptions.filter(option => option.value === this.state.gender)}
+                                                    onChange={
+                                                        (event, meta) => {
+                                                            meta.name = "gender";
+                                                            this.handleSelectChange(event, meta);
+                                                        }}
+                                                    name="gender"
+                                                    id="gender"
+                                                    isSearchable={true}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="form-group row">
+                                            <label htmlFor="country" className="col-sm-4 col-form-label">Country:</label>
+                                            <div className="col-sm-8">
+                                                <Select
+                                                    options={countryOptions}
+                                                    value={countryOptions.filter(option => option.value === this.state.country)}
+                                                    onChange={(event, meta) => {
+                                                        meta.name = "country";
                                                         this.handleSelectChange(event, meta);
                                                     }}
-                                                name="gender"
-                                                id="gender"
-                                                isSearchable={true}
-                                            />
-                                        </div>
-                                        <div className="form-group">
-                                            <label htmlFor="country">Country:</label>
-                                            <Select
-                                                options={countryOptions}
-                                                value={countryOptions.filter(option => option.value === this.state.country)}
-                                                onChange={(event, meta) => {
-                                                    meta.name = "country";
-                                                    this.handleSelectChange(event, meta);
-                                                }}
-                                                name="country"
-                                                id="country"
-                                                isSearchable={true}
-                                            />
+                                                    name="country"
+                                                    id="country"
+                                                    isSearchable={true}
+                                                />
+                                            </div>
                                         </div>
 
                                         <div className="checkbox">
-                                            <label><input type="checkbox" /> Remember me</label>
+                                            <label className="col-sm-6 col-form-label"><input type="checkbox" /> Remember me</label>
                                         </div>
                                         <button type="submit" className="btn btn-primary">Submit</button>
                                     </form>
