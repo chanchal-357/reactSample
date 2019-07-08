@@ -30,9 +30,15 @@ class Register extends React.Component {
         console.log(JSON.stringify({ ...this.state }));
     }
 
+    handleDateChangeJq = (name, date) => {
+        var change = {};
+        change[name] = date;
+        this.setState(change);
+    };
+
     handleSelectChange = (selectedOption, meta) => {
         const { name } = meta;
-        this.setState({ [name]: selectedOption.value});
+        this.setState({ [name]: selectedOption.value });
         console.log(JSON.stringify({ ...this.state }));
     };
 
@@ -186,7 +192,8 @@ class Register extends React.Component {
                                             <DatePicker name="dateOfBirth"
                                                 id="dateOfBirth"
                                                 value={this.state.dateOfBirth}
-                                                onChange={this.dateChangeHandler}
+                                                // onChange={this.dateChangeHandler}
+                                                onChange={this.handleDateChangeJq.bind(this, 'dateOfBirth')}
                                                 dateFormat="DD/MM/YYYY" />
                                         </div>
                                         <div className="form-group">
@@ -195,7 +202,8 @@ class Register extends React.Component {
                                                 name="accountValidity"
                                                 id="accountValidity"
                                                 value={this.state.accountValidity}
-                                                onChange={this.dateChangeHandler}
+                                                // onChange={this.dateChangeHandler}
+                                                onChange={this.handleDateChangeJq.bind(this, 'accountValidity')}
                                                 dateFormat="DD/MM/YYYY"
                                             />
                                         </div>
