@@ -6,13 +6,25 @@ import {
     Button,
 } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import classes from '../styles/Register.css';
 import ConfirmDailog from "react-confirm-bootstrap";
-
+import Modal from 'react-bootstrap/es/Modal';
 var DatePicker = require("react-bootstrap-date-picker");
 var countries = require("i18n-iso-countries");
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 class Register extends React.Component {
+
+    constructor(props, context) {
+        super(props, context);
+
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+
+        this.state = {
+            show: false,
+        };
+    }
 
     state = {
         email: null,
@@ -42,10 +54,6 @@ class Register extends React.Component {
         console.log(JSON.stringify({ ...this.state }));
     };
 
-    handFormSubmit = () => {
-        return null;
-    }
-
     inputChangedHandler = (event) => {
         if (event && event.target) {
             const { name, value } = event.target;
@@ -60,11 +68,15 @@ class Register extends React.Component {
         }
     }
 
+    confirmRegistration = () => {
+        console.log("Request done!");
+    }
+
     buildRejectReason = () => {
         return (
-            <div class="form-group">
+            <div className={"form-group RejectReasonDialog"}>
                 <label className="col-sm-12 control-label"> Are you sure want to continue?</label>
-                <div className="radio form-inline col-sm-10" value={this.state.reason} onChange={this.reasonChangedHandler} >
+                <div className="radio col-sm-12" value={this.state.reason} onChange={this.reasonChangedHandler} >
                     <div className="form-check">
                         <input type="radio" className="form-check-input" name="optoin" value="Option 1" />
                         <label className="form-check-label"> Option 1</label>
@@ -78,9 +90,17 @@ class Register extends React.Component {
                         <label className="form-check-label"> Option 3</label>
                     </div>
                 </div>
-                <br></br>
+                <br />
             </div>
         );
+    }
+
+    handleClose() {
+        this.setState({ show: false });
+    }
+
+    handleShow() {
+        this.setState({ show: true });
     }
 
     render() {
@@ -98,15 +118,18 @@ class Register extends React.Component {
         const buttonList =
             <div className="box-body">
                 <div className="form-group">
-                    <ConfirmDailog onConfirm={() => this.handFormSubmit}
-                        confirmBSStyle="danger"
+                    <ConfirmDailog
+                        onConfirm={this.confirmRegistration}
+                        confirmBSStyle="success"
                         body="Please click on confirm to continue!"
                         title="Registration Approve Confirmation">
                         <button id="approvebtn" type="button" className="btn btn-sm btn-success btn-block"> Approve </button>
                     </ConfirmDailog>
-                    <ConfirmDailog onConfirm={() => this.handFormSubmit}
+                    <ConfirmDailog
+                        onConfirm={this.confirmRegistration}
                         confirmBSStyle="danger"
-                        body={this.buildRejectReason}
+                        visible={false}
+                        body={this.buildRejectReason()}
                         title="Registration Reject Confirmation">
                         <button id="rejectbtn" type="button" className="btn btn-sm btn-danger btn-block"> Reject </button>
                     </ConfirmDailog>
@@ -252,6 +275,7 @@ class Register extends React.Component {
                                         </div>
                                         <button type="submit" className="btn btn-primary">Submit</button>
                                     </form>
+                                    <button type="button" className="btn btn-primary" onClick={this.handleShow}>Fill More Info</button>
                                 </div>
                             </div>
                             <br />
@@ -261,6 +285,20 @@ class Register extends React.Component {
                         </div>
                     </div>
                 </div>
+                <Modal show={this.state.show} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={this.handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
 
         );
