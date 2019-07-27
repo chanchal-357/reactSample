@@ -1,17 +1,15 @@
 import React from 'react';
 import Select from 'react-select';
-import {
-    Container, Col, Form,
-    FormGroup, Label, Input,
-    Button,
-} from 'reactstrap';
+import { Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import classes from '../styles/Register.css';
 import ConfirmDailog from "react-confirm-bootstrap";
 import Modal from 'react-bootstrap/es/Modal';
-var DatePicker = require("react-bootstrap-date-picker");
-var countries = require("i18n-iso-countries");
-countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
+import DatePicker from "react-bootstrap-date-picker";
+import countries from "i18n-iso-countries";
+import countryJson from "i18n-iso-countries/langs/en.json";
+
+countries.registerLocale(countryJson);
 
 class Register extends React.Component {
 
@@ -49,9 +47,9 @@ class Register extends React.Component {
     };
 
     handleSelectChange = (selectedOption, meta) => {
-        const { name } = meta;
+        const { name } = meta.name;
         this.setState({ [name]: selectedOption.value });
-        console.log(JSON.stringify({ ...this.state }));
+        console.log(meta, JSON.stringify({ ...this.state }));
     };
 
     inputChangedHandler = (event) => {
@@ -103,6 +101,47 @@ class Register extends React.Component {
         this.setState({ show: true });
     }
 
+    buildReactSelect = (label, name, options) => {
+        return (
+            <div className="form-group row">
+                <label htmlFor={name} className="col-sm-4 col-form-label">{label}:</label>
+                <div className="col-sm-8">
+                    <Select
+                        options={options}
+                        value={options.filter(option => option.value === this.state[name])}
+                        onChange={
+                            (selectedOption, meta) => {
+                                meta.name = { name };
+                                this.handleSelectChange(selectedOption, meta);
+                            }}
+                        name={name}
+                        isSearchable={true}
+                    />
+                </div>
+            </div>
+        );
+    };
+
+    buildDatePicker = (label, name, minDate, maxDate) => {
+        return (
+            <div className="form-group row">
+                <label htmlFor={name} className="col-sm-4 col-form-label">{label}:</label>
+                <div className="col-sm-8">
+                    <DatePicker
+                        name={name}
+                        id={name}
+                        value={this.state[name]}
+                        // onChange={this.dateChangeHandler}
+                        onChange={this.handleDateChangeJq.bind(this, name)}
+                        dateFormat="DD/MM/YYYY"
+                        minDate={minDate}
+                        maxDate={maxDate}
+                    />
+                </div>
+            </div>
+        );
+    };
+
     render() {
 
         const genderOptions = [
@@ -110,7 +149,7 @@ class Register extends React.Component {
             { label: "Female", value: "F" },
             { label: "Other", value: "O" }
         ];
-
+        const currentDate = new Date().toISOString();
         const countryOptions = [];
         for (let country in countries.getNames("en")) {
             countryOptions.push({ label: countries.getName(country, "en"), value: country });
@@ -138,66 +177,6 @@ class Register extends React.Component {
 
         return (
             <div className="container">
-                {/* <Container className="App">
-                    <h2>Sign In</h2>
-                    <Form className="form">
-                        <Col>
-                            <FormGroup>
-                                <Label>Email</Label>
-                                <Input
-                                    type="email"
-                                    name="email"
-                                    id="exampleEmail"
-                                    placeholder="myemail@email.com"
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <Label for="examplePassword">Password</Label>
-                                <Input
-                                    type="password"
-                                    name="password"
-                                    id="examplePassword"
-                                    placeholder="********"
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <Label for="exampleGender">Gender</Label>
-                                <Select
-                                    options={genderOptions}
-                                    onChange={this.genderChangeHandler}
-                                    name="gender"
-                                    id="gender"
-                                    isSearchable={true}
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <Label for="exampleCountry">Country</Label>
-                                <Select
-                                    options={countryOptions}
-                                    onChange={this.countryChangeHandler}
-                                    name="country"
-                                    id="country"
-                                    isSearchable={true}
-                                />
-                            </FormGroup>
-                        </Col>
-                        <Col>
-                            <FormGroup>
-                                <Label for="exampleDob">Date of Birth</Label>
-                                <DatePicker id="dob" value={this.state.dateVal} onChange={this.handleChange} />
-                            </FormGroup>
-                        </Col>
-                        <DatePicker id="dob1" value={this.state.dateVal} onChange={this.handleChange} />
-                        <Button>Submit</Button>
-                    </Form>
-                </Container> */}
-
                 <div className="row">
                     <div className="col-sm-9">
                         <div className="row">
@@ -212,64 +191,10 @@ class Register extends React.Component {
                                                 <input type="email" className="form-control" name="email" id="email" onChange={this.inputChangedHandler} />
                                             </div>
                                         </div>
-                                        <div className="form-group row">
-                                            <label htmlFor="dob" className="col-sm-4 col-form-label">Date of Birth:</label>
-                                            <div className="col-sm-8">
-                                                <DatePicker name="dateOfBirth"
-                                                    id="dateOfBirth"
-                                                    value={this.state.dateOfBirth}
-                                                    // onChange={this.dateChangeHandler}
-                                                    onChange={this.handleDateChangeJq.bind(this, 'dateOfBirth')}
-                                                    dateFormat="DD/MM/YYYY" />
-                                            </div>
-                                        </div>
-                                        <div className="form-group row">
-                                            <label htmlFor="country" className="col-sm-4 col-form-label">Account Valid Till:</label>
-                                            <div className="col-sm-8">
-                                                <DatePicker
-                                                    name="accountValidity"
-                                                    id="accountValidity"
-                                                    value={this.state.accountValidity}
-                                                    // onChange={this.dateChangeHandler}
-                                                    onChange={this.handleDateChangeJq.bind(this, 'accountValidity')}
-                                                    dateFormat="DD/MM/YYYY"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="form-group row">
-                                            <label htmlFor="gender" className="col-sm-4 col-form-label">Gender:</label>
-                                            <div className="col-sm-8">
-                                                <Select
-                                                    options={genderOptions}
-                                                    value={genderOptions.filter(option => option.value === this.state.gender)}
-                                                    onChange={
-                                                        (event, meta) => {
-                                                            meta.name = "gender";
-                                                            this.handleSelectChange(event, meta);
-                                                        }}
-                                                    name="gender"
-                                                    id="gender"
-                                                    isSearchable={true}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="form-group row">
-                                            <label htmlFor="country" className="col-sm-4 col-form-label">Country:</label>
-                                            <div className="col-sm-8">
-                                                <Select
-                                                    options={countryOptions}
-                                                    value={countryOptions.filter(option => option.value === this.state.country)}
-                                                    onChange={(event, meta) => {
-                                                        meta.name = "country";
-                                                        this.handleSelectChange(event, meta);
-                                                    }}
-                                                    name="country"
-                                                    id="country"
-                                                    isSearchable={true}
-                                                />
-                                            </div>
-                                        </div>
-
+                                        {this.buildDatePicker("Date of Birth", "dateOfBirth", "", currentDate)}
+                                        {this.buildDatePicker("Account Valid Till", "accountValidity", currentDate, "")}
+                                        {this.buildReactSelect("Gender", "gender", genderOptions)}
+                                        {this.buildReactSelect("Country", "country", countryOptions)}
                                         <div className="checkbox">
                                             <label className="col-sm-6 col-form-label"><input type="checkbox" /> Remember me</label>
                                         </div>
