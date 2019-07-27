@@ -1,6 +1,5 @@
 import React from 'react';
 import Select from 'react-select';
-import { Button } from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import classes from '../styles/Register.css';
 import ConfirmDailog from "react-confirm-bootstrap";
@@ -9,10 +8,12 @@ import DatePicker from "react-bootstrap-date-picker";
 import countries from "i18n-iso-countries";
 import countryJson from "i18n-iso-countries/langs/en.json";
 import NavBar from './NavBar';
+import {Button, TextField} from '@material-ui/core/';
+import Card from '@material-ui/core/Card';
 
 countries.registerLocale(countryJson);
 
-class Register extends React.Component {
+class RegisterNew extends React.Component {
 
     constructor(props, context) {
         super(props, context);
@@ -144,7 +145,14 @@ class Register extends React.Component {
     };
 
     render() {
-
+        const styles = theme => ({
+            container: {
+              backgroundColor: 'blue',
+              color: 'red',
+              width: '75%',
+              height: 5 * theme.spacing.unit
+            }
+          });
         const genderOptions = [
             { label: "Male", value: "M" },
             { label: "Female", value: "F" },
@@ -178,7 +186,7 @@ class Register extends React.Component {
 
         return (
             <div className="container">
-                 <NavBar />
+                <NavBar />
                 <div className="row">
                     <div className="col-sm-9">
                         <div className="row">
@@ -197,12 +205,15 @@ class Register extends React.Component {
                                         {this.buildDatePicker("Account Valid Till", "accountValidity", currentDate, "")}
                                         {this.buildReactSelect("Gender", "gender", genderOptions)}
                                         {this.buildReactSelect("Country", "country", countryOptions)}
+                                        <TextField
+                                            placeholder="Placeholder here"
+                                            label="Basic TextField" />
                                         <div className="checkbox">
                                             <label className="col-sm-6 col-form-label"><input type="checkbox" /> Remember me</label>
                                         </div>
-                                        <button type="submit" className="btn btn-primary">Submit</button>
+                                        <Button variant="contained" color="primary" mini="fab">Submit</Button>
                                     </form>
-                                    <button type="button" className="btn btn-primary" onClick={this.handleShow}>Fill More Info</button>
+                                    <Button variant="outlined" color="default" onClick={this.handleShow}>Fill More Info</Button>
                                 </div>
                             </div>
                             <br />
@@ -218,10 +229,10 @@ class Register extends React.Component {
                     </Modal.Header>
                     <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={this.handleClose}>
+                        <Button variant="contained" color="secondary" onClick={this.handleClose}>
                             Close
                         </Button>
-                        <Button variant="primary" onClick={this.handleClose}>
+                        <Button variant="contained" color="primary" onClick={this.handleClose}>
                             Save Changes
                         </Button>
                     </Modal.Footer>
@@ -231,4 +242,4 @@ class Register extends React.Component {
         );
     }
 }
-export default Register;
+export default RegisterNew;
