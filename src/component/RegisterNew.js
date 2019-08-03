@@ -8,8 +8,12 @@ import DatePicker from "react-bootstrap-date-picker";
 import countries from "i18n-iso-countries";
 import countryJson from "i18n-iso-countries/langs/en.json";
 import NavBar from './NavBar';
-import {Button, TextField} from '@material-ui/core/';
-import Card from '@material-ui/core/Card';
+import { Button, TextField } from '@material-ui/core/';
+// import Card from '@material-ui/core/Card';
+import MenuItem from '@material-ui/core/MenuItem';
+import SelectM from '@material-ui/core/Select';
+import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
 
 countries.registerLocale(countryJson);
 
@@ -32,7 +36,9 @@ class RegisterNew extends React.Component {
         dateOfBirth: new Date("1988-08-12").toISOString().split('.')[0] + "Z",
         country: "IN",
         reason: null,
-        accountValidity: new Date("2019-12-25").toISOString().split('.')[0] + "Z"
+        accountValidity: new Date("2019-12-25").toISOString().split('.')[0] + "Z",
+        ageOpen: false,
+        age: null
     }
 
     dateChangeHandler = (value, formattedValue) => {
@@ -124,6 +130,45 @@ class RegisterNew extends React.Component {
         );
     };
 
+    // const [age, setAge] = React.useState('');
+    // const [open, setOpen] = React.useState(false);
+
+    handleAgeChange = (event) => {
+        this.setState({ age: event.target.value });
+    };
+
+    handleAgeClose = () => {
+        this.setState({ ageOpen: false });
+    };
+
+    handleOpen = () => {
+        this.setState({ ageOpen: true });
+    }
+
+    buildReactMatSelect = () => {
+        return (
+
+            <SelectM
+                open={this.ageOpen}
+                onOpen={this.handleOpen}
+                onClose={this.handleAgeClose}
+                value={this.state.age}
+                onChange={this.handleAgeChange}
+                inputProps={{
+                    name: 'age',
+                    id: 'demo-controlled-open-select',
+                }}
+            >
+                <MenuItem value="">
+                    <em>None</em>
+                </MenuItem>
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+            </SelectM>
+        );
+    };
+
     buildDatePicker = (label, name, minDate, maxDate) => {
         return (
             <div className="form-group row">
@@ -145,14 +190,14 @@ class RegisterNew extends React.Component {
     };
 
     render() {
-        const styles = theme => ({
-            container: {
-              backgroundColor: 'blue',
-              color: 'red',
-              width: '75%',
-              height: 5 * theme.spacing.unit
-            }
-          });
+        // const styles = theme => ({
+        //     container: {
+        //       backgroundColor: 'blue',
+        //       color: 'red',
+        //       width: '75%',
+        //       height: 5 * theme.spacing.unit
+        //     }
+        //   });
         const genderOptions = [
             { label: "Male", value: "M" },
             { label: "Female", value: "F" },
@@ -198,16 +243,16 @@ class RegisterNew extends React.Component {
                                         <div className="form-group row">
                                             <label htmlFor="email" className="col-sm-4 col-form-label">Email address:</label>
                                             <div className="col-sm-8">
-                                                <input type="email" className="form-control" name="email" id="email" onChange={this.inputChangedHandler} />
+                                                {/* <input type="email" className="form-control" name="email" id="email" onChange={this.inputChangedHandler} /> */}
+                                                <TextField placeholder="Input your email" label="Email" name="email" onChange={this.inputChangedHandler} />
                                             </div>
                                         </div>
                                         {this.buildDatePicker("Date of Birth", "dateOfBirth", "", currentDate)}
                                         {this.buildDatePicker("Account Valid Till", "accountValidity", currentDate, "")}
                                         {this.buildReactSelect("Gender", "gender", genderOptions)}
                                         {this.buildReactSelect("Country", "country", countryOptions)}
-                                        <TextField
-                                            placeholder="Placeholder here"
-                                            label="Basic TextField" />
+                                        <InputLabel htmlFor="demo-controlled-open-select">Age</InputLabel>
+                                        {this.buildReactMatSelect()}
                                         <div className="checkbox">
                                             <label className="col-sm-6 col-form-label"><input type="checkbox" /> Remember me</label>
                                         </div>

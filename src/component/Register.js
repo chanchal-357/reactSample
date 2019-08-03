@@ -117,6 +117,7 @@ class Register extends React.Component {
                             }}
                         name={name}
                         isSearchable={true}
+                        styles={{ menu: styles => ({ ...styles, zIndex: 999 }) }}
                     />
                 </div>
             </div>
@@ -186,7 +187,7 @@ class Register extends React.Component {
                                 <div className="box-header with-border"> <h3 className="box-title">Fill out details</h3>
                                 </div>
                                 <div className="box-body">
-                                    <form action="/success" method="POST">
+                                    <form action="/success" method="GET">
                                         <div className="form-group row">
                                             <label htmlFor="email" className="col-sm-4 col-form-label">Email address:</label>
                                             <div className="col-sm-8">
@@ -194,8 +195,8 @@ class Register extends React.Component {
                                             </div>
                                         </div>
                                         {this.buildDatePicker("Date of Birth", "dateOfBirth", "", currentDate)}
-                                        {this.buildDatePicker("Account Valid Till", "accountValidity", currentDate, "")}
                                         {this.buildReactSelect("Gender", "gender", genderOptions)}
+                                        {this.buildDatePicker("Account Valid Till", "accountValidity", currentDate, "")}
                                         {this.buildReactSelect("Country", "country", countryOptions)}
                                         <div className="checkbox">
                                             <label className="col-sm-6 col-form-label"><input type="checkbox" /> Remember me</label>
