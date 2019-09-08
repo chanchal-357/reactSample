@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const RegisterSuccess = () => {
     return (
         <div>
-            <p>Registeration Success!</p>
+            <p>Registration Success!</p>
             <p><Link to="/">home</Link> page.</p>
         </div>
     );
