@@ -12,7 +12,7 @@ import { Button, TextField } from '@material-ui/core/';
 // import Card from '@material-ui/core/Card';
 import MenuItem from '@material-ui/core/MenuItem';
 import SelectM from '@material-ui/core/Select';
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 
 countries.registerLocale(countryJson);
@@ -33,19 +33,12 @@ class RegisterNew extends React.Component {
     state = {
         email: null,
         gender: "M",
-        dateOfBirth: new Date("1988-08-12").toISOString().split('.')[0] + "Z",
+        dateOfBirth: new Date().toISOString().split('.')[0] + "Z",
         country: "IN",
         reason: null,
-        accountValidity: new Date("2019-12-25").toISOString().split('.')[0] + "Z",
+        accountValidity: new Date().toISOString().split('.')[0] + "Z",
         ageOpen: false,
         age: null
-    }
-
-    dateChangeHandler = (value, formattedValue) => {
-        this.setState({
-            dateOfBirth: value, // ISO String, ex: "2016-11-19T12:00:00.000Z"
-        });
-        console.log(JSON.stringify({ ...this.state }));
     }
 
     handleDateChangeJq = (name, date) => {
@@ -178,7 +171,6 @@ class RegisterNew extends React.Component {
                         name={name}
                         id={name}
                         value={this.state[name]}
-                        // onChange={this.dateChangeHandler}
                         onChange={this.handleDateChangeJq.bind(this, name)}
                         dateFormat="DD/MM/YYYY"
                         minDate={minDate}
@@ -239,11 +231,10 @@ class RegisterNew extends React.Component {
                                 <div className="box-header with-border"> <h3 className="box-title">Fill out details</h3>
                                 </div>
                                 <div className="box-body">
-                                    <form action="/success" method="POST">
+                                    <form action="/success" method="GET">
                                         <div className="form-group row">
                                             <label htmlFor="email" className="col-sm-4 col-form-label">Email address:</label>
                                             <div className="col-sm-8">
-                                                {/* <input type="email" className="form-control" name="email" id="email" onChange={this.inputChangedHandler} /> */}
                                                 <TextField placeholder="Input your email" label="Email" name="email" onChange={this.inputChangedHandler} />
                                             </div>
                                         </div>
