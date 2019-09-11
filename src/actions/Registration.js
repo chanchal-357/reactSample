@@ -1,6 +1,6 @@
 import { registration } from "../constants/ActionTypes";
 
-export const SetMobileNumber = mobileNumber => ({
+export const setMobileNumber = mobileNumber => ({
     type: registration.SET_MOBILE_NUMBER,
     payload: mobileNumber
 });

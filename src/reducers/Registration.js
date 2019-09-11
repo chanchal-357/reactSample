@@ -4,7 +4,7 @@ const initialState = {
     mobileNumber: ''
 };
 
-export const registrationReducer = { state = initialState, action } => {
+export const registrationReducer = (state = initialState, action) => {
     switch (action.type) {
         case registration.SET_MOBILE_NUMBER:
             return { ...state, mobileNumber: action.payload };

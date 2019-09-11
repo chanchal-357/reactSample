@@ -9,8 +9,8 @@ import DatePicker from "react-bootstrap-date-picker";
 import countries from "i18n-iso-countries";
 import countryJson from "i18n-iso-countries/langs/en.json";
 import NavBar from './NavBar';
-// import { connect } from 'react-redux';
-// import * as RegistrationAction from '../actions/Registration';
+import { connect } from 'react-redux';
+import * as RegistrationAction from '../actions/Registration';
 
 countries.registerLocale(countryJson);
 
@@ -24,17 +24,14 @@ class Register extends React.Component {
 
         this.state = {
             show: false,
+            email: null,
+            mobileNumber: this.props.mobileNumber,
+            gender: "M",
+            dateOfBirth: new Date("1988-08-12").toISOString().split('.')[0] + "Z",
+            country: "IN",
+            reason: null,
+            accountValidity: new Date("2019-12-25").toISOString().split('.')[0] + "Z"
         };
-    }
-
-    state = {
-        email: null,
-        mobileNumber: '',
-        gender: "M",
-        dateOfBirth: new Date("1988-08-12").toISOString().split('.')[0] + "Z",
-        country: "IN",
-        reason: null,
-        accountValidity: new Date("2019-12-25").toISOString().split('.')[0] + "Z"
     }
 
     dateChangeHandler = (value, formattedValue) => {
@@ -71,7 +68,9 @@ class Register extends React.Component {
     }
 
     confirmRegistration = () => {
-        console.log("Request done!");
+        const mobileNumber = this.state.mobileNumber;
+        this.props.setMobileNumber(mobileNumber);
+        console.log("Request done!, set mobile number to redux state, ", mobileNumber);
     }
 
     buildRejectReason = () => {
@@ -200,7 +199,7 @@ class Register extends React.Component {
                                         <div className="form-group row">
                                             <label htmlFor="mobile" className="col-sm-4 col-form-label">Mobile Number:</label>
                                             <div className="col-sm-8">
-                                                <input type="number" className="form-control" name="mobileNumber" id="mobileNumber" onChange={this.inputChangedHandler} max="9999999999" />
+                                                <input type="number" className="form-control" name="mobileNumber" id="mobileNumber" value={this.state.mobileNumber} onChange={this.inputChangedHandler} max="9999999999" />
                                             </div>
                                         </div>
                                         {this.buildDatePicker("Date of Birth", "dateOfBirth", "", currentDate)}
@@ -242,18 +241,17 @@ class Register extends React.Component {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         mobileNumber: state.registration && state.registration.mobileNumber ? state.registration.mobileNumber : ''
-//     };
-// }
+const mapStateToProps = (state) => {
+    console.log("State: ", JSON.stringify(state));
+    return {
+        mobileNumber: state.registration && state.registration.mobileNumber ? state.registration.mobileNumber : ''
+    };
+}
 
-// const mapDispacthToProps = (dispatch) => {
-//     return {
-//         setMobileNumber: (mobileNumber) => dispatch(RegistrationAction.setMobileNumber(mobileNumber))
-//     };
-// }
+const mapDispacthToProps = (dispatch) => {
+    return {
+        setMobileNumber: (mobileNumber) => dispatch(RegistrationAction.setMobileNumber(mobileNumber))
+    };
+}
 
-// export default connect(mapStateToProps, mapDispacthToProps)(Register);
-
-export default Register;
+export default connect(mapStateToProps, mapDispacthToProps)(Register);
